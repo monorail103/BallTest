@@ -2,19 +2,25 @@ using UnityEngine;
 
 public class BatterManager : MonoBehaviour
 {
-    public GameObject ballPrefab;
-    public Transform spawnPoint;
-
-    private void Update()
+    void Update()
     {
+        // スペースキーが押されたらスイング
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SpawnBall();
+            Swing();
         }
     }
 
-    private void SpawnBall()
+    void Swing()
     {
-        Instantiate(ballPrefab, spawnPoint.position, Quaternion.identity);
+        Animator animator = GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetTrigger("Swing");
+        }
+        else
+        {
+            Debug.LogWarning("Animator component not found on " + gameObject.name);
+        }
     }
 }
