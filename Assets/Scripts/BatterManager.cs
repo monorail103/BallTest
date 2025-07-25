@@ -1,11 +1,15 @@
 using UnityEngine;
+using UnityEngine.InputSystem; // 👈 これを追加
 
 public class BatterManager : MonoBehaviour
 {
+    public Animator animator;
+
     void Update()
     {
         // スペースキーが押されたらスイング
-        if (Input.GetKeyDown(KeyCode.Space))
+        // if (Input.GetKeyDown(KeyCode.Space)) // 👈 古いコード
+        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) // 👈 新しいコードに修正
         {
             Swing();
         }
@@ -13,7 +17,6 @@ public class BatterManager : MonoBehaviour
 
     void Swing()
     {
-        Animator animator = GetComponent<Animator>();
         if (animator != null)
         {
             animator.SetTrigger("Swing");
